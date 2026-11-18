@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Corvo | Purchase assistant</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-mark">C</div>
+      <div class="brand-copy"><p class="eyebrow">CORVO ENGINEERING</p><h1>Purchase assistant</h1></div>
+      <span class="status"><i></i> Local workspace</span>
+    </header>
+
+    <nav class="tabs" aria-label="Workspace sections">
+      <button class="tab active" data-panel="chat-panel">Request chat</button>
+      <button class="tab" data-panel="batch-panel">PR batch</button>
+      <button class="tab" data-panel="buyer-panel">Buyer queue</button>
+      <button class="tab" data-panel="policy-panel">Policy &amp; data</button>
+    </nav>
+
+    <section id="chat-panel" class="panel active">
+      <div class="intro">
+        <p class="eyebrow">EMPLOYEE REQUESTS</p>
+        <h2>What do you need to buy?</h2>
+        <p>Tell us what you need, how many, which plant, when you need it, and whether it is urgent. I’ll ask if anything is missing.</p>
+      </div>
+      <div class="card chat-card">
+        <div class="message assistant-message"><div class="avatar">C</div><div class="bubble"><p>Hi! I can help start a purchase request. For example:</p><p class="example">“We need 100 pairs of nitrile gloves for Chakan by December 1.”</p></div></div>
+        <div id="conversation" aria-live="polite"></div>
+        <form id="request-form" class="composer">
+          <label class="sr-only" for="request-text">Describe what you need</label>
+          <textarea id="request-text" rows="2" placeholder="Describe what you need…" required></textarea>
+          <button class="primary" type="submit">Send <span>→</span></button>
+        </form>
+        <p class="hint">A buyer reviews and approves every purchase or sourcing action.</p>
+      </div>
+    </section>
+
+    <section id="batch-panel" class="panel">
+      <div class="section-heading"><div><p class="eyebrow">BATCH PROCESSING</p><h2>Process purchase requests</h2><p>Upload the PR CSV. The app groups related lines, applies the active policy, and prepares a decision export.</p></div></div>
+      <div class="card">
+        <label class="field-label" for="batch-file">PR batch CSV</label>
+        <div class="file-row"><input id="batch-file" type="file" accept=".csv,text/csv" /><button id="process-batch" class="primary">Process batch</button></div>
+        <div id="batch-status" class="notice" role="status"></div>
+        <button id="download-batch" class="secondary hidden">Download decisions CSV</button>
+        <div id="batch-results" class="table-wrap"></div>
+      </div>
+      <div class="card export-card">
+        <div><h3>Preferred supplier list</h3><p>Choose an as-of date to export the top three active suppliers for each item, with the ranking factors.</p></div>
+        <div class="file-row"><label class="sr-only" for="preferred-date">As-of date</label><input id="preferred-date" type="date" value="2026-11-17" /><button id="download-preferred" class="secondary">Download supplier CSV</button></div>
+      </div>
+    </section>
+
+    <section id="buyer-panel" class="panel">
+      <div class="section-heading"><div><p class="eyebrow">PROCUREMENT WORKSPACE</p><h2>Buyer queue</h2><p>Review decisions, record approvals, or override a route with a written reason.</p></div><button id="refresh-queue" class="secondary">Refresh queue</button></div>
+      <div id="buyer-status" class="notice" role="status"></div>
+      <div id="buyer-results" class="card table-wrap"></div>
+      <details class="card"><summary>Recent audit history</summary><div id="audit-results" class="table-wrap"></div></details>
+    </section>
+
+    <section id="policy-panel" class="panel">
+      <div class="section-heading"><div><p class="eyebrow">PROCUREMENT ADMIN</p><h2>Policy and reference data</h2><p>Review an amendment, preview its rule changes, then activate the approved version.</p></div></div>
+      <div class="card">
+        <div class="card-heading"><div><h3>Policy amendment</h3><p>Upload a JSON policy, or load the current policy and edit its rules below. PDF text can be extracted for reference.</p></div><button id="load-policy" class="secondary">Load current policy</button></div>
+        <label class="field-label" for="policy-file">JSON policy file</label>
+        <input id="policy-file" type="file" accept=".json,application/json" />
+        <label class="field-label spaced" for="policy-json">Policy data (JSON)</label>
+        <textarea id="policy-json" class="code-box" spellcheck="false" rows="16"></textarea>
+        <div class="file-row actions-row"><button id="preview-policy" class="secondary">Preview changes</button><button id="activate-policy" class="primary" disabled>Approve and activate</button></div>
+        <div id="policy-status" class="notice" role="status"></div>
+        <ul id="policy-changes" class="change-list"></ul>
+        <label class="field-label spaced" for="policy-pdf">Extract text from amendment PDF (then use it to update the JSON above)</label>
+        <div class="file-row"><input id="policy-pdf" type="file" accept=".pdf,application/pdf" /><button id="extract-policy" class="secondary">Extract PDF text</button></div>
+        <textarea id="policy-extracted" class="code-box" rows="7" readonly placeholder="Extracted policy text will appear here."></textarea>
+      </div>
+      <div class="card">
+        <h3>Load task data for a hosted app</h3>
+        <p>The public source code excludes the task kit. Upload the supplied ZIP at runtime to load the item, supplier, contract, and PO records.</p>
+        <div class="file-row"><input id="kit-file" type="file" accept=".zip,application/zip" /><button id="import-kit" class="secondary">Import task kit</button></div>
+        <div id="data-status" class="notice" role="status"></div>
+      </div>
+      <div class="card">
+        <h3>Add a PDF-only contract</h3>
+        <p>Upload a signed contract. The app will attempt to read its item rates and ceiling when processing requests.</p>
+        <div class="file-row"><input id="contract-file" type="file" accept=".pdf,application/pdf" /><button id="upload-contract" class="secondary">Add contract PDF</button></div>
+        <div id="contract-status" class="notice" role="status"></div>
+      </div>
+    </section>
+
+    <footer>Corvo Engineering · Procurement request prototype</footer>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

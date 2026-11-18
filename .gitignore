@@ -1,0 +1,16 @@
+# Python environment and generated files
+.venv/
+__pycache__/
+*.py[cod]
+.env
+
+# Challenge source data must not be pushed to a public repository.
+data/
+work/task_kit/
+
+# This policy file comes from the supplied challenge kit; upload the kit at runtime.
+app/policies/policy_v5.json
+
+# Local database and exports
+*.sqlite3
+
