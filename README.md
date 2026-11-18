@@ -29,7 +29,7 @@ Open `http://127.0.0.1:8000`. Keep the terminal open while using the app. Intera
 
 The challenge kit is deliberately excluded from Git with `.gitignore`. It is already under `data/Cantill_FullStack_Task_Kit/` for local development. For a hosted instance, open **Policy & data → Import task kit** and upload the supplied ZIP. The app reads the item, supplier, PO, contract, and PR CSVs from that runtime data folder.
 
-The machine-readable v5.0 policy is part of the supplied challenge kit. It is deliberately kept out of the public repository with the other kit files. Locally, the app reads it from `data/Cantill_FullStack_Task_Kit/policy_v5.json`; on a hosted instance, import the kit ZIP before processing requests.
+The baseline v5.0 rules are stored as application configuration in `app/policies/policy_v5.json`. The source PDFs, sample PR batch, catalogue, supplier data, and contracts stay out of the public repository. Import the task-kit ZIP at runtime to load the reference data.
 
 ## Main pieces
 
@@ -58,7 +58,7 @@ Free hosting can sleep, restart, or have temporary local storage. Render's free 
 
 ## Repository hygiene
 
-Do not commit the supplied task-kit files, `data/`, `.venv/`, SQLite database, raw PDFs, or sample batch. The `.gitignore` excludes them, including the v5.0 policy JSON. Import the task kit at runtime for local or hosted use.
+Do not commit the supplied raw task-kit files, `data/`, `.venv/`, SQLite database, PDFs, or CSVs. The `.gitignore` excludes these files. `app/policies/policy_v5.json` is the app's structured baseline rules, not a copy of the source batch or master data; it is included so the policy screen works before the reference-data ZIP is imported.
 
 ## Blind-test files
 

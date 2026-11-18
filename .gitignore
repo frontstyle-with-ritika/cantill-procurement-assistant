@@ -8,9 +8,6 @@ __pycache__/
 data/
 work/task_kit/
 
-# This policy file comes from the supplied challenge kit; upload the kit at runtime.
-app/policies/policy_v5.json
-
 # Local database and exports
 *.sqlite3
 

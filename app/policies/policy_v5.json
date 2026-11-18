@@ -1,0 +1,89 @@
+{
+  "version": "5.0",
+  "effective_date": "2026-04-01",
+  "rules": [
+    {
+      "clause": "1.2",
+      "when": {
+        "all": [
+          { "field": "is_new_item", "operator": "equals", "value": true }
+        ]
+      },
+      "decision": "SOURCING_REQUEST",
+      "route": "NEW_ITEM_SOURCING",
+      "suggestion_count": 0
+    },
+    {
+      "clause": "5.1",
+      "when": {
+        "all": [
+          { "field": "item_type", "operator": "equals", "value": "Capex" }
+        ]
+      },
+      "decision": "SOURCING_REQUEST",
+      "route": "CAPEX_SOURCING",
+      "suggestion_count": 5
+    },
+    {
+      "clause": "5.2",
+      "when": {
+        "all": [
+          { "field": "usable_contract", "operator": "equals", "value": true }
+        ]
+      },
+      "decision": "PO",
+      "route": "CONTRACT_PO",
+      "supplier_from": "contract",
+      "unit_price_from": "contract_rate"
+    },
+    {
+      "clause": "5.3",
+      "when": {
+        "all": [
+          { "field": "urgency", "operator": "equals", "value": "Emergency" },
+          { "field": "requirement_value", "operator": "less_than_or_equal", "value": 500000 },
+          { "field": "recent_active_purchase", "operator": "equals", "value": true }
+        ]
+      },
+      "decision": "PO",
+      "route": "EMERGENCY_PO",
+      "supplier_from": "first_preferred",
+      "unit_price_from": "reference_price"
+    },
+    {
+      "clause": "5.4",
+      "when": {
+        "all": [
+          { "field": "requirement_value", "operator": "less_than", "value": 200000 },
+          { "field": "recent_active_purchase", "operator": "equals", "value": true }
+        ]
+      },
+      "decision": "PO",
+      "route": "SPOT_PO",
+      "supplier_from": "first_preferred",
+      "unit_price_from": "reference_price"
+    },
+    {
+      "clause": "5.5",
+      "when": {
+        "all": [
+          { "field": "requirement_value", "operator": "less_than", "value": 1000000 }
+        ]
+      },
+      "decision": "SOURCING_REQUEST",
+      "route": "RFQ",
+      "suggestion_count": 3
+    },
+    {
+      "clause": "5.6",
+      "when": {
+        "all": [
+          { "field": "requirement_value", "operator": "greater_than_or_equal", "value": 1000000 }
+        ]
+      },
+      "decision": "SOURCING_REQUEST",
+      "route": "RFP",
+      "suggestion_count": 5
+    }
+  ]
+}
